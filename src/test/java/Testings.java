@@ -1,4 +1,7 @@
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -6,12 +9,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.jupiter.api.Test;
 public class Testings
 {
+    WebDriver driver;
+
+    @BeforeEach
+    public void setup()
+    {
+        driver = new ChromeDriver();
+
+    }
 
     @Test
-    public void Chrome_test() throws InterruptedException {
-        // System.setProperty("WebDriver.chrome.driver","/Users/ashish/Downloads/chromedriver");
-        WebDriver driver = new ChromeDriver();
-
+    public void Chrome_test()
+    {
         driver.get("http://www.automationpractice.pl/index.php");
         driver.manage().window().maximize();
         driver.findElement(By.id("search_query_top")).sendKeys("dresses");
@@ -20,8 +29,12 @@ public class Testings
         js.executeScript("window.scrollBy(0,1000)");
         driver.manage().deleteAllCookies();
         System.out.println(driver.getTitle());
+    }
 
+    @AfterEach
+    public void tearDown() throws InterruptedException {
         Thread.sleep(5000);
+        if (driver != null)
         driver.quit();
     }
 
